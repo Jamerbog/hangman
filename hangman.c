@@ -19,10 +19,10 @@ void checker()
 
         letter = word[i];
   
-        // if (strcmp(letter, guess))
-        // {
-        //     printf("You guessed a correct character!");
-        // }
+        if (letter == guess)
+        {
+            printf("You guessed a correct character!");
+        }
 
         printf("%c", letter);
     }
@@ -47,6 +47,9 @@ int main()
     //calculates the number of elements within the wordList array
 
     arraySize = sizeof wordList / sizeof wordList[0];
+
+    //limits random number to just index values in the array 
+
     rNum = (rand() % arraySize);
 
     //assign a random word from the list
