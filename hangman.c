@@ -11,27 +11,36 @@ char guess;
 char letter;
 int wordSize;
 int guessCorrect;
-char blankLine[20];
+char lineHint[20];
+int guessedLetterIndex;
+
+addGuessedLetter()
+{
+    lineHint[guessedLetterIndex] = guess;
+}
 
 void checker()
 {
     for (int i = 0; i < wordSize; i++)
     {
-        //the letter which will be compared with the user's guess
-
-        letter = tolower(word[i]);
+        letter = tolower(word[i]); //the letter which will be compared with the user's guess
   
         if (letter == guess && guessCorrect == 0)
         {
             printf("\n\nYou guessed a correct character!");
             guessCorrect = 1;
+            guessedLetterIndex = i;
+            addGuessedLetter();
         }
-
+        else if (letter == guess && guessCorrect == 1) //adds any repeat letters found without informing the player twice
+        {
+            guessedLetterIndex = i;
+            addGuessedLetter();
+        }
     }
-    if (guessCorrect == 0) //condition to only print if the player has guessed a correct character
+    if (guessCorrect == 0) //condition to only print if the player has guessed an incorrect character
     {
         printf("\n\nYou guessed wrong!");
-        guessCorrect = 1;
     }
 }
 
@@ -41,7 +50,7 @@ void initBlankLine()
 
     for (int i = 0; i < wordSize; i++)
     {
-        strncat(blankLine, &underscore, 1);
+        strncat(lineHint, &underscore, 1);
     }
 }
 
@@ -50,11 +59,14 @@ void startGame()
     printf("\n\nWelcome to Hangman!\n\nPress 'Enter' to start.\n\n");
     getchar();
     initBlankLine();
-    printf(blankLine);
-    printf("\n\nGuess a letter: ");
-    scanf("%c", &guess);
-    checker();
-    printf("\n\n");
+    for (int i = 0; i < 10; i++)
+    {
+        printf("\n\nGuess a letter: ");
+        printf(lineHint, "");
+        scanf("%c", &guess);
+        checker();
+        printf("\n\n");
+    }
 }
 
 int main()
