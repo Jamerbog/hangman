@@ -10,6 +10,8 @@ int rNum;
 char guess;
 char letter;
 int wordSize;
+int guessCorrect;
+char blankLine[20];
 
 void checker()
 {
@@ -17,26 +19,42 @@ void checker()
     {
         //the letter which will be compared with the user's guess
 
-        letter = word[i];
+        letter = tolower(word[i]);
   
-        if (letter == guess)
+        if (letter == guess && guessCorrect == 0)
         {
-            printf("You guessed a correct character!");
+            printf("\n\nYou guessed a correct character!");
+            guessCorrect = 1;
         }
 
-        printf("%c", letter);
+    }
+    if (guessCorrect == 0) //condition to only print if the player has guessed a correct character
+    {
+        printf("\n\nYou guessed wrong!");
+        guessCorrect = 1;
+    }
+}
+
+void initBlankLine()
+{
+    char underscore = '_';
+
+    for (int i = 0; i < wordSize; i++)
+    {
+        strncat(blankLine, &underscore, 1);
     }
 }
 
 void startGame()
 {
-    printf("Welcome to Hangman!\n\nPress 'Enter' to start.\n\n");
+    printf("\n\nWelcome to Hangman!\n\nPress 'Enter' to start.\n\n");
     getchar();
-    printf("Guess a letter: ");
+    initBlankLine();
+    printf(blankLine);
+    printf("\n\nGuess a letter: ");
     scanf("%c", &guess);
     checker();
     printf("\n\n");
-    printf("Your guess: %c\n\n", guess);
 }
 
 int main()
@@ -44,22 +62,14 @@ int main()
     srand(time(NULL));
     char wordList[5][30] =  {"ANIMAL", "AMONG", "MICROPHONE", "AMOUNT", "BRITISH"};
 
-    //calculates the number of elements within the wordList array
+    arraySize = sizeof wordList / sizeof wordList[0];  //calculates the number of elements within the wordList array
+ 
+    rNum = (rand() % arraySize);  //limits random number to just index values in the array 
 
-    arraySize = sizeof wordList / sizeof wordList[0];
+    strcpy(word, wordList[rNum]);   //assign a random word from the list
+    printf("\n\nThe word you need to guess is: %s \n", word);
 
-    //limits random number to just index values in the array 
-
-    rNum = (rand() % arraySize);
-
-    //assign a random word from the list
-
-    strcpy(word, wordList[rNum]);
-    printf("The word you need to guess is: %s \n", word);
-
-    //calculates the number of characters within the selected word's array
-
-    wordSize = strlen(word);
+    wordSize = strlen(word);  //calculates the number of characters within the selected word's array
     startGame();
 
     return 0;
