@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
@@ -14,20 +15,32 @@ int wordSize;
 int guessCorrect;
 char lineHint[20];
 int guessedLetterIndex;
+int win = 0;
 
 void checker()
 {
-    for (int i = 0; i <= wordSize; i++)
+    for (int i = 0; i <= wordSize && win == 0; i++)
     {
         letter = tolower(word[i]); //the letter which will be compared with the user's guess
-  
-        if (letter == guess)
+       
+       
+
+        if (strcmp(lineHint, word) == 0)
+        {
+            system("clear");
+            printf("\n\nYou guessed the word!");
+            win = 1;
+        }
+
+        else if (letter == guess)
         {
             guessedLetterIndex = i;
             lineHint[guessedLetterIndex] = guess;
-            if (guessCorrect == 0)
+            
+            if (guessCorrect == 0 && win == 0)
             {
-                printf("\n\nYou guessed a correct letter!");
+                system("clear");
+                printf("You guessed a correct letter!");
                 guessCorrect = 1;
             }
         }
@@ -35,7 +48,8 @@ void checker()
 
     if (guessCorrect == 0) //condition to only print if the player has guessed an incorrect character
     {
-        printf("\n\nYou guessed wrong!");
+        system("clear");
+        printf("You guessed wrong!");
     }
 }
 
@@ -54,23 +68,31 @@ void startGame()
     printf("\n\nWelcome to Hangman!\n\n\nPress 'Enter' to start.\n\n");
     getchar();
     initBlankLine();
-    for (int i = 0; i < wordSize + 10; i++)
+    system("clear");
+    if (win == 0)
     {
-        guessCorrect = 0;
-        system("clear");
-        printf("Completed Guesses: %d\n\n", i);
-        printf(lineHint);
-        printf("\n\nGuess a letter: ");
-        scanf(" %c", &guess);
-        checker();
-        printf("\n\n");
+        for (int i = 0; i < wordSize + 10 && win != 1; i++)
+        {
+            guessCorrect = 0;
+            printf("Completed Guesses: %d\n\n", i);
+            printf("%s", lineHint);
+            printf("\n\nGuess a letter: ");
+            scanf(" %c", &guess);
+            checker();
+            printf("\n\n");
+        }
+    }
+    else 
+    {
+        printf("Press enter to play again\n.");
+        return;
     }
 }
 
 int main()
 {
     srand(time(NULL));
-    char wordList[5][30] =  {"ANIMAL", "AMONG", "MICROPHONE", "AMOUNT", "BRITISH"};
+    char wordList[5][30] =  {"animal", "among", "microphone", "amount", "british"};
 
     arraySize = sizeof wordList / sizeof wordList[0];  //calculates the number of elements within the wordList array
  
