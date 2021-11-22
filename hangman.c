@@ -16,6 +16,92 @@ int guessCorrect;
 char lineHint[20];
 int guessedLetterIndex;
 int win = 0;
+int wrongGuesses = 0;
+int playerLost = 0;
+
+void drawHangman()
+{
+    switch (wrongGuesses)
+    {
+        case 0:
+            puts("\n\n   +---+\n"
+                 "   |   |\n"
+                 "       |\n"
+                 "       |\n"
+                 "       |\n"
+                 "       |\n"
+                 " =========\n");
+            break;
+        case 1:
+            puts("\n\n   +---+\n"
+                 "   |   |\n"
+                 "   0   |\n"
+                 "       |\n"
+                 "       |\n"
+                 "       |\n"
+                 " =========\n");
+            break;
+        case 2:
+            puts("\n\n   +---+\n"
+                 "   |   |\n"
+                 "   0   |\n"
+                 "   |   |\n"
+                 "       |\n"
+                 "       |\n"
+                 " =========\n");
+            break;
+        case 3:
+            puts("\n\n   +---+\n"
+                 "   |   |\n"
+                 "   0   |\n"
+                 "  /|   |\n"
+                 "       |\n"
+                 "       |\n"
+                 " =========\n");
+            break;
+        case 4:
+            puts("\n\n   +---+\n"
+                 "   |   |\n"
+                 "   0   |\n"
+                 "  /|\\  |\n"
+                 "       |\n"
+                 "       |\n"
+                 " =========\n");
+            break;
+        case 5:
+            puts("\n\n   +---+\n"
+                 "   |   |\n"
+                 "   0   |\n"
+                 "  /|\\  |\n"
+                 "  /    |\n"
+                 "       |\n"
+                 " =========\n");
+            break;
+        case 6:
+            puts("\n\n   +---+\n"
+                 "   |   |\n"
+                 "   0   |\n"
+                 "  /|\\  |\n"
+                 "  / \\  |\n"
+                 "       |\n"
+                 " =========\n");
+            sleep(1);
+            system("clear");
+            puts("\n"
+" __     ______  _    _   _      ____   _____ ______ \n"
+" \\ \\   / / __ \\| |  | | | |    / __ \\ / ____|  ____|\n"
+"  \\ \\_/ / |  | | |  | | | |   | |  | | (___ | |__   \n"
+"   \\   /| |  | | |  | | | |   | |  | |\\___ \\|  __|  \n"
+"    | | | |__| | |__| | | |___| |__| |____) | |____ \n"
+"    |_|  \\____/ \\____/  |______\\____/|_____/|______|\n"
+"                                                    \n");
+            playerLost = 1;
+            break;
+
+
+    }
+
+}
 
 void checker()
 {
@@ -23,8 +109,6 @@ void checker()
     {
         letter = tolower(word[i]); //the letter which will be compared with the user's guess
        
-       
-
         if (strcmp(lineHint, word) == 0)
         {
             system("clear");
@@ -40,7 +124,11 @@ void checker()
             if (guessCorrect == 0 && win == 0)
             {
                 system("clear");
-                printf("You guessed a correct letter!");
+                if (win != 1)
+                {
+                    printf("You guessed a correct letter!");
+                }
+                printf("winstat:%d", win);
                 guessCorrect = 1;
             }
         }
@@ -50,6 +138,7 @@ void checker()
     {
         system("clear");
         printf("You guessed wrong!");
+        wrongGuesses++;
     }
 }
 
@@ -65,13 +154,16 @@ void initBlankLine()
 
 void startGame()
 {
-    printf("\n\nWelcome to Hangman!\n\n\nPress 'Enter' to start.\n\n");
+    system("clear");
+    printf("The word you need to guess is: %s \n\n", word);
+    printf("Welcome to Hangman!\n\n\nPress 'Enter' to start.\n\n");
     getchar();
     initBlankLine();
     system("clear");
+    drawHangman();
     if (win == 0)
     {
-        for (int i = 0; i < wordSize + 10 && win != 1; i++)
+        for (int i = 0; i < wordSize + 10 && win != 1 && playerLost != 1;  i++)
         {
             guessCorrect = 0;
             printf("Completed Guesses: %d\n\n", i);
@@ -79,6 +171,7 @@ void startGame()
             printf("\n\nGuess a letter: ");
             scanf(" %c", &guess);
             checker();
+            drawHangman();
             printf("\n\n");
         }
     }
@@ -99,7 +192,6 @@ int main()
     rNum = (rand() % arraySize);  //limits random number to just index values in the array 
 
     strcpy(word, wordList[rNum]);   //assign a random word from the list
-    printf("\n\nThe word you need to guess is: %s \n", word);
 
     wordSize = strlen(word);  //calculates the number of characters within the selected word's array
     startGame();
