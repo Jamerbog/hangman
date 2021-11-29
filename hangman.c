@@ -103,7 +103,7 @@ void drawHangman()
 
 }
 
-void checker()
+int checker()
 {
     for (int i = 0; i <= wordSize && win == 0; i++)
     {
@@ -112,7 +112,8 @@ void checker()
         if (strcmp(lineHint, word) == 0)
         {
             system("clear");
-            printf("\n\nYou guessed the word!");
+            printf("\n\nYou guessed the word!\n\n");
+            return 0;
             win = 1;
         }
 
@@ -128,7 +129,6 @@ void checker()
                 {
                     printf("You guessed a correct letter!");
                 }
-                printf("winstat:%d", win);
                 guessCorrect = 1;
             }
         }
@@ -152,7 +152,7 @@ void initBlankLine()
     }
 }
 
-void startGame()
+int startGame()
 {
     system("clear");
     printf("The word you need to guess is: %s \n\n", word);
@@ -170,7 +170,10 @@ void startGame()
             printf("%s", lineHint);
             printf("\n\nGuess a letter: ");
             scanf(" %c", &guess);
-            checker();
+            if (checker() == 0)
+            {
+                return 0;
+            }
             drawHangman();
             printf("\n\n");
         }
@@ -178,7 +181,7 @@ void startGame()
     else 
     {
         printf("Press enter to play again\n.");
-        return;
+        return 0;
     }
 }
 
