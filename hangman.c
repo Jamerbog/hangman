@@ -103,6 +103,12 @@ void drawHangman()
 
 }
 
+int winScreen()
+{
+    system("clear");
+    printf("you win. happy now?\n\n");
+}
+
 int checker()
 {
     for (int i = 0; i <= wordSize && win == 0; i++)
@@ -113,8 +119,9 @@ int checker()
         {
             system("clear");
             printf("\n\nYou guessed the word!\n\n");
-            return 0;
+            winScreen();
             win = 1;
+            return 0;     
         }
 
         else if (letter == guess)
@@ -161,29 +168,26 @@ int startGame()
     initBlankLine();
     system("clear");
     drawHangman();
-    if (win == 0)
+    
+    for (int i = 0; i < wordSize + 10 && win != 1 && playerLost != 1;  i++)
     {
-        for (int i = 0; i < wordSize + 10 && win != 1 && playerLost != 1;  i++)
+        guessCorrect = 0;
+        printf("Completed Guesses: %d\n\n", i);
+        printf("%s", lineHint);
+        printf("\n\nGuess a letter: ");
+        scanf(" %c", &guess);
+
+        if (checker() == 0)
         {
-            guessCorrect = 0;
-            printf("Completed Guesses: %d\n\n", i);
-            printf("%s", lineHint);
-            printf("\n\nGuess a letter: ");
-            scanf(" %c", &guess);
-            if (checker() == 0)
-            {
-                return 0;
-            }
-            drawHangman();
-            printf("\n\n");
+            return 0;
         }
+
+        drawHangman();
+        printf("\n\n");
     }
-    else 
-    {
-        printf("Press enter to play again\n.");
-        return 0;
-    }
+
 }
+
 
 int main()
 {
@@ -196,7 +200,7 @@ int main()
 
     strcpy(word, wordList[rNum]);   //assign a random word from the list
 
-    wordSize = strlen(word);  //calculates the number of characters within the selected word's array
+    wordSize = strlen(word);  //calculates the number of characters within the selected word
     startGame();
 
     return 0;
