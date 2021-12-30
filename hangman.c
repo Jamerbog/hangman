@@ -6,14 +6,14 @@
 #include <time.h>
 #include <ctype.h>
 
-char word[20];
+char word[16];
 int arraySize;
 int rNum;
 char guess;
 char letter;
 int wordSize;
 int guessCorrect;
-char lineHint[20];
+char lineHint[16];
 int guessedLetterIndex;
 int win = 0;
 int wrongGuesses = 0;
@@ -152,22 +152,193 @@ int checker()
 void initBlankLine()
 {
     char underscore = '_';
+    char space = ' ';
 
     for (int i = 0; i < wordSize; i++)
     {
-        strncat(lineHint, &underscore, 1);
+        if (word[i] != ' ')
+        {
+            strncat(lineHint, &underscore, 1);
+        }
+        else
+        {
+            strncat(lineHint, &space, 1);
+        }
     }
+}
+
+int chooseDifficulty()
+{
+    int difficulty;
+
+    system("clear");
+
+    printf("Please pick a difficulty level:\n\n");
+    printf("1 - Easy (single word, 5 characters or under)\n");
+    printf("2 - Medium (single word, 10 characters or under)\n");
+    printf("3 - Hard (two words, 10 characters or under)\n\n");
+    printf("Difficulty number: ");
+    scanf(" %d", &difficulty);
+
+    return difficulty;
+}
+
+int chooseTheme()
+{
+    int theme;
+
+    system("clear");
+
+    printf("Now it's time to choose a theme:\n\n");
+    printf("1 - Animals\n");
+    printf("2 - Food\n");
+    printf("3 - Computing\n\n");
+    printf("Theme number: ");
+    scanf(" %d", &theme);
+
+    return theme;
+}
+
+int assignWordlist(int difficulty, int theme)
+{
+    srand(time(NULL));
+    
+    switch(theme)
+    {
+        case 1:
+            if (difficulty == 1)
+            {
+                char wordlist[5][6] = {"frog", "snake", "mouse", "bird", "zebra"};
+            
+                arraySize = 5; 
+ 
+                rNum = (rand() % arraySize); 
+
+                strcpy(word, wordlist[rNum]);   
+
+                wordSize = strlen(word); 
+            }
+            else if (difficulty == 2)
+            {
+                char wordlist[5][11] = {"chimpanzee", "rhinoceros", "crocodile", "alligator", "butterfly"};
+
+                arraySize = 5; 
+ 
+                rNum = (rand() % arraySize); 
+
+                strcpy(word, wordlist[rNum]);   
+
+                wordSize = strlen(word); 
+            }
+            else
+            {
+                char wordlist[5][20] = {"tiger shark", "gentoo penguin", "red squirrel", "hammerhead shark", "arctic fox"};
+        
+                arraySize = 5; 
+ 
+                rNum = (rand() % arraySize); 
+
+                strcpy(word, wordlist[rNum]);   
+
+                wordSize = strlen(word); 
+            }
+        break;
+
+        case 2:
+            if (difficulty == 1)
+            {
+                char wordlist[5][6] = {"apple", "bacon", "beans", "curry", "pizza"};
+         
+                arraySize = 5; 
+ 
+                rNum = (rand() % arraySize); 
+
+                strcpy(word, wordlist[rNum]);   
+
+                wordSize = strlen(word); 
+            }
+            else if (difficulty == 2)
+            {
+                char wordlist[5][11] = {"chocolate", "blackberry", "asparagus", "cornflakes", "cheesecake"};
+        
+                arraySize = 5; 
+ 
+                rNum = (rand() % arraySize); 
+
+                strcpy(word, wordlist[rNum]);   
+
+                wordSize = strlen(word); 
+            }
+            else
+            {
+                char wordlist[5][20] = {"kidney beans", "peanut butter", "iceberg lettuce", "mandarin orange", "french fries"};
+
+                arraySize = 5; 
+ 
+                rNum = (rand() % arraySize); 
+
+                strcpy(word, wordlist[rNum]);   
+
+                wordSize = strlen(word); 
+            }
+        break;
+
+        case 3:
+            if (difficulty == 1)
+            {
+                char wordlist[5][6] = {"blog", "cyber", "linux", "print", "mouse"};
+            
+                arraySize = 5; 
+ 
+                rNum = (rand() % arraySize); 
+
+                strcpy(word, wordlist[rNum]);   
+
+                wordSize = strlen(word); 
+            }
+            else if (difficulty == 2)
+            {
+                char wordlist[5][11] = {"bandwidth", "algorithm", "hypertext", "mainframe", "resolution"};
+                
+                arraySize = 5; 
+ 
+                rNum = (rand() % arraySize); 
+
+                strcpy(word, wordlist[rNum]);   
+
+                wordSize = strlen(word); 
+            }
+            else
+            {
+                char wordlist[5][20] = {"search engine", "virtual machine", "domain name", "hard drive", "social media"};
+
+                arraySize = 5; 
+ 
+                rNum = (rand() % arraySize); 
+
+                strcpy(word, wordlist[rNum]);   
+
+                wordSize = strlen(word); 
+
+            }
+        break;
+    }    
+    return 0;
 }
 
 int startGame()
 {
     system("clear");
-    printf("The word you need to guess is: %s \n\n", word);
-    printf("Welcome to Hangman!\n\n\nPress 'Enter' to start.\n\n");
+    printf("Welcome to Hangman!\n\nPress any key to start.\n\n");
+    getchar();
+    int difficulty = chooseDifficulty();
+    int theme = chooseTheme();
+    assignWordlist(difficulty, theme);
     getchar();
     initBlankLine();
     system("clear");
     drawHangman();
+    printf("The word you need to guess is: %s \n\n", word);
     
     for (int i = 0; i < wordSize + 10 && win != 1 && playerLost != 1;  i++)
     {
@@ -188,19 +359,8 @@ int startGame()
 
 }
 
-
 int main()
 {
-    srand(time(NULL));
-    char wordList[5][30] =  {"animal", "among", "microphone", "amount", "british"};
-
-    arraySize = sizeof wordList / sizeof wordList[0];  //calculates the number of elements within the wordList array
- 
-    rNum = (rand() % arraySize);  //limits random number to just index values in the array 
-
-    strcpy(word, wordList[rNum]);   //assign a random word from the list
-
-    wordSize = strlen(word);  //calculates the number of characters within the selected word
     startGame();
 
     return 0;
