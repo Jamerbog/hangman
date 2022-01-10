@@ -175,12 +175,26 @@ int chooseDifficulty()
 
     system("clear");
     printf("Please pick a difficulty level:\n\n");
+    if (difficulty == 0)
+    {
+        printf("ERROR: input must be a single number.\n");
+    }
     printf("1 - Easy (single word, 5 characters or under)\n");
     printf("2 - Medium (single word, 10 characters or under)\n");
     printf("3 - Hard (two words, 10 characters or under)\n\n");
     printf("Difficulty number: ");
-    scanf(" %d", &difficulty);
-    return difficulty;
+    scanf(" %1d", &difficulty);
+    if (difficulty == 1 || difficulty == 2 || difficulty == 3)
+    {
+        return difficulty;
+    }
+    else 
+    {
+        difficulty = 0;
+        fflush(stdin);
+        if (sizeof(difficulty) )
+        chooseDifficulty();
+    }
 }
 
 int chooseTheme()
