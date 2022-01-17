@@ -171,43 +171,61 @@ void initBlankLine()
 
 int chooseDifficulty()
 {
-    int difficulty;
+    system("clear");
+    printf("Welcome to Hangman!\n\nPress 'Enter' to start.\n\n");
 
+    int difficulty = 0;
+    char dummy;
+    while ((dummy = getchar()) != '\n' && dummy != EOF) { } //clears input buffer
+    
     system("clear");
     printf("Please pick a difficulty level:\n\n");
-    if (difficulty == 0)
-    {
-        printf("ERROR: input must be a single number.\n");
-    }
     printf("1 - Easy (single word, 5 characters or under)\n");
     printf("2 - Medium (single word, 10 characters or under)\n");
     printf("3 - Hard (two words, 10 characters or under)\n\n");
     printf("Difficulty number: ");
-    scanf(" %1d", &difficulty);
+
+    scanf("%1d", &difficulty);
+
     if (difficulty == 1 || difficulty == 2 || difficulty == 3)
     {
         return difficulty;
     }
-    else 
+    else
     {
-        difficulty = 0;
-        fflush(stdin);
-        if (sizeof(difficulty) )
-        chooseDifficulty();
+        system("clear");
+        return chooseDifficulty();
     }
 }
 
 int chooseTheme()
 {
-    int theme;
-
     system("clear");
     printf("Now it's time to choose a theme:\n\n");
+    
+    int theme = 0;
+    char dummy;
+    while ((dummy = getchar()) != '\n' && dummy != EOF) { } //clears input buffer
+
     printf("1 - Animals\n");
     printf("2 - Food\n");
     printf("3 - Computing\n\n");
     printf("Theme number: ");
-    scanf(" %d", &theme);
+    scanf(" %1d", &theme);
+
+    if (theme == 1 || theme == 2 || theme == 3)
+    {
+        return theme;
+    }
+    else
+    {
+        system("clear");
+        return chooseTheme();
+    }
+
+    //dummy = getchar();
+    //while ((dummy = getchar()) != '\n' && dummy != EOF) { } //clears input buffer
+
     return theme;
 }
 
@@ -287,9 +305,6 @@ int assignWordlist(int difficulty, int theme)
 
 void startGame()
 {
-    system("clear");
-    printf("Welcome to Hangman!\n\nPress any key to start.\n\n");
-    getchar();
     int difficulty = chooseDifficulty();
     int theme = chooseTheme();
     assignWordlist(difficulty, theme);
