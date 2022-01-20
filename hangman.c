@@ -222,10 +222,7 @@ int chooseTheme()
         system("clear");
         return chooseTheme();
     }
-
-    //dummy = getchar();
-    //while ((dummy = getchar()) != '\n' && dummy != EOF) { } //clears input buffer
-
+    
     return theme;
 }
 
@@ -307,8 +304,9 @@ void startGame()
 {
     int difficulty = chooseDifficulty();
     int theme = chooseTheme();
+    char dummy;
+    while ((dummy = getchar()) != '\n' && dummy != EOF) { } //clears input buffer
     assignWordlist(difficulty, theme);
-    getchar();
     initBlankLine();
     system("clear");
     drawHangman();
