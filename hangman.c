@@ -228,29 +228,33 @@ int chooseTheme()
 
 int assignWordlist(int difficulty, int theme)
 {
-    int arraySize = 5;
     srand(time(NULL));
-    int rNum = (rand() % arraySize); //limits random index values to those within each wordlist
-    
+
     switch(theme)
     {
         case 1:
             if (difficulty == 1)
             {
-                char wordlist[5][6] = {"frog", "snake", "mouse", "bird", "zebra"};
-                strcpy(word, wordlist[rNum]);   
+                char* wordlist[] = {"frog", "snake", "mouse", "bird", "zebra"};
+                int arraySize = (sizeof(wordlist) / 20);
+                int rNum = (rand() % arraySize); //limits random index values to those within each wordlist
+                strncpy(word, wordlist[rNum], 20);   
                 wordSize = strlen(word); 
             }
             else if (difficulty == 2)
             {
-                char wordlist[5][11] = {"chimpanzee", "rhinoceros", "crocodile", "alligator", "butterfly"};
-                strcpy(word, wordlist[rNum]);   
+                char* wordlist[] = {"chimpanzee", "rhinoceros", "crocodile", "alligator", "butterfly"};
+                int arraySize = (sizeof(wordlist) / 20);
+                int rNum = (rand() % arraySize); //limits random index values to those within each wordlist
+                strncpy(word, wordlist[rNum], 20);   
                 wordSize = strlen(word); 
             }
             else
             {
-                char wordlist[5][20] = {"tiger shark", "gentoo penguin", "red squirrel", "hammerhead shark", "arctic fox"};
-                strcpy(word, wordlist[rNum]);   
+                char* wordlist[] = {"tiger shark", "gentoo penguin", "red squirrel", "hammerhead shark", "arctic fox"};
+                int arraySize = (sizeof(wordlist) / 20);
+                int rNum = (rand() % arraySize); //limits random index values to those within each wordlist
+                strncpy(word, wordlist[rNum], 20);   
                 wordSize = strlen(word); 
             }
         break;
@@ -258,20 +262,26 @@ int assignWordlist(int difficulty, int theme)
         case 2:
             if (difficulty == 1)
             {
-                char wordlist[5][6] = {"apple", "bacon", "beans", "curry", "pizza"};
-                strcpy(word, wordlist[rNum]);   
+                char* wordlist[] = {"apple", "bacon", "beans", "curry", "pizza"};
+                int arraySize = (sizeof(wordlist) / 20);
+                int rNum = (rand() % arraySize); //limits random index values to those within each wordlist
+                strncpy(word, wordlist[rNum], 20);   
                 wordSize = strlen(word); 
             }
             else if (difficulty == 2)
             {
-                char wordlist[5][11] = {"chocolate", "blackberry", "asparagus", "cornflakes", "cheesecake"};
-                strcpy(word, wordlist[rNum]);   
+                char* wordlist[] = {"chocolate", "blackberry", "asparagus", "cornflakes", "cheesecake"};
+                int arraySize = (sizeof(wordlist) / 20);
+                int rNum = (rand() % arraySize); //limits random index values to those within each wordlist
+                strncpy(word, wordlist[rNum], 20);   
                 wordSize = strlen(word); 
             }
             else
             {
-                char wordlist[5][20] = {"kidney beans", "peanut butter", "iceberg lettuce", "mandarin orange", "french fries"};
-                strcpy(word, wordlist[rNum]);   
+                char* wordlist[] = {"kidney beans", "peanut butter", "iceberg lettuce", "mandarin orange", "french fries"};
+                int arraySize = (sizeof(wordlist) / 20);
+                int rNum = (rand() % arraySize); //limits random index values to those within each wordlist
+                strncpy(word, wordlist[rNum], 20);   
                 wordSize = strlen(word); 
             }
         break;
@@ -279,20 +289,26 @@ int assignWordlist(int difficulty, int theme)
         case 3:
             if (difficulty == 1)
             {
-                char wordlist[5][6] = {"blog", "cyber", "linux", "print", "mouse"};
-                strcpy(word, wordlist[rNum]);   
+                char* wordlist[] = {"blog", "cyber", "linux", "print", "mouse"};
+                int arraySize = (sizeof(wordlist) / 20);
+                int rNum = (rand() % arraySize); //limits random index values to those within each wordlist
+                strncpy(word, wordlist[rNum], 20);   
                 wordSize = strlen(word); 
             }
             else if (difficulty == 2)
             {
-                char wordlist[5][11] = {"bandwidth", "algorithm", "hypertext", "mainframe", "resolution"};
-                strcpy(word, wordlist[rNum]);   
+                char* wordlist[] = {"bandwidth", "algorithm", "hypertext", "mainframe", "resolution"};
+                int arraySize = (sizeof(wordlist) / 20);
+                int rNum = (rand() % arraySize); //limits random index values to those within each wordlist
+                strncpy(word, wordlist[rNum], 20);   
                 wordSize = strlen(word); 
             }
             else
             {
-                char wordlist[5][20] = {"search engine", "virtual machine", "domain name", "hard drive", "social media"};
-                strcpy(word, wordlist[rNum]);   
+                char* wordlist[] = {"search engine", "virtual machine", "domain name", "hard drive", "social media"};
+                int arraySize = (sizeof(wordlist) / 20);
+                int rNum = (rand() % arraySize); //limits random index values to those within each wordlist
+                strncpy(word, wordlist[rNum], 20);   
                 wordSize = strlen(word); 
             }
         break;
