@@ -180,9 +180,9 @@ int chooseDifficulty()
     
     system("clear");
     printf("Please pick a difficulty level:\n\n");
-    printf("1 - Easy (single word, 5 characters or under)\n");
-    printf("2 - Medium (single word, 10 characters or under)\n");
-    printf("3 - Hard (two words, 10 characters or under)\n\n");
+    printf("1 - Easy (single word - 5 characters or under)\n");
+    printf("2 - Medium (single word - no upper character limit)\n");
+    printf("3 - Hard (two words - each with no upper character limit)\n\n");
     printf("Difficulty number: ");
 
     scanf("%1d", &difficulty);
@@ -206,7 +206,6 @@ int chooseTheme()
     int theme = 0;
     char dummy;
     while ((dummy = getchar()) != '\n' && dummy != EOF) { } //clears input buffer
-
     printf("1 - Animals\n");
     printf("2 - Food\n");
     printf("3 - Computing\n\n");
@@ -226,6 +225,48 @@ int chooseTheme()
     return theme;
 }
 
+int assignWord(char* filename)
+{
+    FILE *fp;
+    char character;
+    int lineCount = 0;
+    int randomLine = 0;
+    int line = 0;
+
+    fp = fopen(filename, "r");
+
+    if (fp == NULL)
+    {
+        printf("cannot open file");
+        exit(0);
+    }
+
+    character = fgetc(fp);
+    while (character != EOF)
+    {
+        if (character == '\n')
+        {
+            lineCount++;
+        }
+        character = fgetc(fp);
+    }
+
+    printf("Lines: %d\n", lineCount);
+    randomLine = rand() % lineCount;
+    fclose(fp);
+    fp = fopen(filename, "r");
+
+    while (line -1 < randomLine)
+    {
+        fgets(word, 20, fp);
+        line++;
+    }
+    word[strcspn(word, "\n")] = 0; //removes the trailing newline added by fgets
+    fclose(fp);
+    return 0;
+}
+
+
 int assignWordlist(int difficulty, int theme)
 {
     srand(time(NULL));
@@ -235,81 +276,118 @@ int assignWordlist(int difficulty, int theme)
         case 1:
             if (difficulty == 1)
             {
-                char* wordlist[] = {"frog", "snake", "mouse", "bird", "zebra"};
-                int arraySize = (sizeof(wordlist) / 20);
-                int rNum = (rand() % arraySize); //limits random index values to those within each wordlist
-                strncpy(word, wordlist[rNum], 20);   
+                char filename[] = "animals.txt";
+                assignWord(filename);
                 wordSize = strlen(word); 
+
+                while (wordSize > 5)
+                {
+                    assignWord(filename);
+                    wordSize = strlen(word); 
+                }
             }
             else if (difficulty == 2)
             {
-                char* wordlist[] = {"chimpanzee", "rhinoceros", "crocodile", "alligator", "butterfly"};
-                int arraySize = (sizeof(wordlist) / 20);
-                int rNum = (rand() % arraySize); //limits random index values to those within each wordlist
-                strncpy(word, wordlist[rNum], 20);   
+                char filename[] = "animals.txt";
+                assignWord(filename);
                 wordSize = strlen(word); 
+
+                while (strchr(word, ' ') != NULL)
+                {
+                    assignWord(filename);
+                    wordSize = strlen(word); 
+                }                
             }
             else
             {
-                char* wordlist[] = {"tiger shark", "gentoo penguin", "red squirrel", "hammerhead shark", "arctic fox"};
-                int arraySize = (sizeof(wordlist) / 20);
-                int rNum = (rand() % arraySize); //limits random index values to those within each wordlist
-                strncpy(word, wordlist[rNum], 20);   
+                char filename[] = "animals.txt";
+                assignWord(filename);
                 wordSize = strlen(word); 
+
+                while (strchr(word, ' ') == NULL)
+                {
+                    assignWord(filename);
+                    wordSize = strlen(word); 
+                }      
             }
         break;
 
         case 2:
             if (difficulty == 1)
             {
-                char* wordlist[] = {"apple", "bacon", "beans", "curry", "pizza"};
-                int arraySize = (sizeof(wordlist) / 20);
-                int rNum = (rand() % arraySize); //limits random index values to those within each wordlist
-                strncpy(word, wordlist[rNum], 20);   
+                char filename[] = "foods.txt";
+                assignWord(filename);
                 wordSize = strlen(word); 
+
+                while (wordSize > 5)
+                {
+                    assignWord(filename);
+                    wordSize = strlen(word); 
+                }
+            
             }
             else if (difficulty == 2)
             {
-                char* wordlist[] = {"chocolate", "blackberry", "asparagus", "cornflakes", "cheesecake"};
-                int arraySize = (sizeof(wordlist) / 20);
-                int rNum = (rand() % arraySize); //limits random index values to those within each wordlist
-                strncpy(word, wordlist[rNum], 20);   
-                wordSize = strlen(word); 
+                char filename[] = "foods.txt";
+                assignWord(filename);
+                wordSize = strlen(word);  
+
+                while (strchr(word, ' ') != NULL)
+                {
+                    assignWord(filename);
+                    wordSize = strlen(word); 
+                }
             }
             else
             {
-                char* wordlist[] = {"kidney beans", "peanut butter", "iceberg lettuce", "mandarin orange", "french fries"};
-                int arraySize = (sizeof(wordlist) / 20);
-                int rNum = (rand() % arraySize); //limits random index values to those within each wordlist
-                strncpy(word, wordlist[rNum], 20);   
+                char filename[] = "foods.txt";
+                assignWord(filename);
                 wordSize = strlen(word); 
+
+                while (strchr(word, ' ') == NULL)
+                {
+                    assignWord(filename);
+                    wordSize = strlen(word); 
+                }      
             }
         break;
 
         case 3:
             if (difficulty == 1)
             {
-                char* wordlist[] = {"blog", "cyber", "linux", "print", "mouse"};
-                int arraySize = (sizeof(wordlist) / 20);
-                int rNum = (rand() % arraySize); //limits random index values to those within each wordlist
-                strncpy(word, wordlist[rNum], 20);   
+                char filename[] = "computing.txt";
+                assignWord(filename);
                 wordSize = strlen(word); 
+
+                while (wordSize > 5)
+                {
+                    assignWord(filename);
+                    wordSize = strlen(word); 
+                }
             }
             else if (difficulty == 2)
             {
-                char* wordlist[] = {"bandwidth", "algorithm", "hypertext", "mainframe", "resolution"};
-                int arraySize = (sizeof(wordlist) / 20);
-                int rNum = (rand() % arraySize); //limits random index values to those within each wordlist
-                strncpy(word, wordlist[rNum], 20);   
+                char filename[] = "computing.txt";
+                assignWord(filename);
                 wordSize = strlen(word); 
+
+                while (strchr(word, ' ') != NULL)
+                {
+                    assignWord(filename);
+                    wordSize = strlen(word); 
+                } 
             }
             else
             {
-                char* wordlist[] = {"search engine", "virtual machine", "domain name", "hard drive", "social media"};
-                int arraySize = (sizeof(wordlist) / 20);
-                int rNum = (rand() % arraySize); //limits random index values to those within each wordlist
-                strncpy(word, wordlist[rNum], 20);   
+                char filename[] = "computing.txt";
+                assignWord(filename);
                 wordSize = strlen(word); 
+
+                while (strchr(word, ' ') == NULL)
+                {
+                    assignWord(filename);
+                    wordSize = strlen(word);    
+                }  
             }
         break;
     }    
